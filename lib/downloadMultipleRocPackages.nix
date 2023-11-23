@@ -10,5 +10,5 @@ let
 
 in runCommandLocal "download-roc-packages" { } ''
   mkdir -p $out
-  ${jq}/bin/jq -s 'add' ${jsonFiles} > $out/roc-packages.json
+  ${jq}/bin/jq -s '.' ${jsonFiles} > $out/roc-packages.json
 ''

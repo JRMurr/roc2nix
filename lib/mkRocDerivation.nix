@@ -13,7 +13,7 @@ in stdenv.mkDerivation (cleanedArgs // {
 
   postPatch = ''
     for f in `find . -name "*.roc" -type f`; do
-        ${jq}/bin/jq -r '[.url, .path] | @tsv' ${downloadedDeps}/roc-packages.json |
+        ${jq}/bin/jq -r '(.[] | [.url, .path]) | @tsv' ${downloadedDeps}/roc-packages.json |
           while IFS=$'\t' read -r url path; do
             substituteInPlace $f \
               --replace "$url" "$path"

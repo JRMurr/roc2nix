@@ -30,7 +30,7 @@
 
         packages = {
           examples-simple = examples.simple;
-
+          examples-multiple-platforms = examples.multiple-platforms;
         };
       });
 }
