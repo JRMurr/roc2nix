@@ -15,15 +15,16 @@ in stdenv.mkDerivation (cleanedArgs // {
           while IFS=$'\t' read -r url tar; do
             substituteInPlace $f \
               --replace "$url" "$tar"
-            cat $f
           done
     done
   '';
 
   buildPhase = ''
-    runhook preBuild
+    runHook preBuild
 
     mkdir -p $out
+
+    ${roc}/bin/roc build --prebuilt-platform --max-threads 1
 
     runHook postBuild
   '';
