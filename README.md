@@ -14,4 +14,18 @@ NOTE: goal is to eventually have a code gen step to reduce boiler plate like nod
 - `mkRocDerivation` will replace all references to the package url with the now local path and build with the provided roc compiler
 
 
+
+## TODO
+
+- [] support bundling instead of just building a binary
+- [] support specifiying a nix expression as a dep instead of just the url
+- [] actually verify the blake3 checksum. (since we untar roc wont do this for us). Maybe roc could support local tar balls?
+- [] allow specifiying a specific file to build + outputed binary name
+- [] the code gen tool to get all deps of a roc package for you
+
+
+## Ideas to explore
+
+- Explore using the nix c abi to make a "nix platform" for roc. Potential for roc build to build the derivation or at least move more of this logic into roc.
+
 Lib setup is heavily inspired by [crane](https://github.com/ipetkov/crane)
