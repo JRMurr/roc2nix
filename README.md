@@ -2,6 +2,8 @@
 
 not working yet :(
 
+to run the example you can run `nix build .#examples-simple --print-build-logs` in the repo root
+
 
 Right now the user must specify all the url deps to the builder like so
 ```nix
