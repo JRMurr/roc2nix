@@ -26,8 +26,6 @@ in stdenv.mkDerivation (cleanedArgs // {
 
     mkdir -p $out
 
-    cat main.roc
-
     RUST_BACKTRACE=full ${roc}/bin/roc build --prebuilt-platform --linker=legacy
 
     runHook postBuild

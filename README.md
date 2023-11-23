@@ -1,40 +1,17 @@
 # roc2Nix
 
-not working yet :(
+Very much a work in progress but basic nix building works
 
 to run the example you can run `nix build .#examples-simple --print-build-logs` in the repo root
 
 
-Right now the user must specify all the url deps to the builder like so
-```nix
-let
-  fs = lib.fileset;
-  # only grab roc files
-  sourceFiles = fs.fileFilter (file: lib.hasSuffix ".roc" file.name) ./.;
+## How it works
 
-in rocLib.mkRocDerivation {
-  name = "simple-roc";
-  version = "0.1.0";
+NOTE: goal is to eventually have a code gen step to reduce boiler plate like node2nix but for now its all manaul
 
-  src = fs.toSource {
-    root = ./.;
-    fileset = sourceFiles;
-  };
-
-  rocDeps = [{
-    sha256 = "sha256-ToGNR0+ZIaYZ0rwF0M2QyXcRdabi84/joa4wsaC3g0Y=";
-    url =
-      "https://github.com/roc-lang/basic-cli/releases/download/0.6.0/QOQW08n38nHHrVVkJNiPIjzjvbR3iMjXeFY5w1aT46w.tar.br";
-  }];
-}
-```
-
-this lib will then call `fetchUrl` to get a nix store path for the url and replace all uses of that url with the nix store path instead.
-
-
-See examples/simple for what the desired api is like.
-
-
+- nix is given a list of urls of roc packages with their sha256 hash
+- `downloadRocPackage` will call `fetchUrl` on each package and extract the package into a directory
+- `mkRocDerivation` will replace all references to the package url with the now local path and build with the provided roc compiler
 
 
 Lib setup is heavily inspired by [crane](https://github.com/ipetkov/crane)
