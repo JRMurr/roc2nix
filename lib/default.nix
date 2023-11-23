@@ -3,6 +3,11 @@
 lib.makeScope newScope (self:
   let inherit (self) callPackage;
   in {
+
+    downloadMultipleRocPackages =
+      callPackage ./downloadMultipleRocPackages.nix { };
+    downloadRocPackage = callPackage ./downloadRocPackage.nix { };
+
     mkRocDerivation = callPackage ./mkRocDerivation.nix { };
 
     # TODO: maybe call this set toolchain since we need the user to give us the roc cli

@@ -1,3 +1,3 @@
 { pkgs, rocLib }:
 let callPackage = pkgs.callPackage;
-in { simple = callPackage ./simple.nix { inherit rocLib; }; }
+in { simple = callPackage ./simple { inherit rocLib; }; }

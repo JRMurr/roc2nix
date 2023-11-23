@@ -1,23 +1,29 @@
-{ stdenv, roc }:
+{ stdenv, downloadMultipleRocPackages, roc }:
 
 { name ? "${args.pname}-${args.version}", src ? null
 , rocDeps # list of {url,sha256} for all external deps of the roc program
-, ... }@args:
+, mainFile ? null, ... }@args:
 let
-in stdenv.mkDerivation args // {
+  cleanedArgs = builtins.removeAttrs args [ "rocDeps" "mainFile" ];
+  downloadedDeps = downloadMultipleRocPackages { inherit rocDeps; };
 
-  postUnPackPhase = ''
-    ls -la $src
-    ls -la ${roc}
-    echo asd
+in stdenv.mkDerivation (cleanedArgs // {
+
+  # TODO: should we do the change in postPatch instead?
+  postPatch = ''
+    echo ${downloadedDeps}
+    for f in `find . -name "*.roc" -type f`; do
+        echo "$f"
+        # substituteInPlace $f
+    done
   '';
 
   buildPhase = ''
-    runhook preBuildPhase
+    runhook preBuild
 
+    mkdir -p $out
 
-
-    runhook postBuildPhase
+    runHook postBuild
   '';
-}
+})
 
