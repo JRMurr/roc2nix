@@ -28,9 +28,19 @@ in stdenv.mkDerivation (cleanedArgs // {
 
     cat main.roc
 
-    RUST_BACKTRACE=full ${roc}/bin/roc build --prebuilt-platform --max-threads 1
+    RUST_BACKTRACE=full ${roc}/bin/roc build --prebuilt-platform --linker=legacy
 
     runHook postBuild
+  '';
+
+  installPhase = ''
+    runHook preInstall
+
+    # TODO: need to support other names
+    mkdir -p $out/bin
+    cp main $out/bin
+
+    runHook postInstall
   '';
 })
 
