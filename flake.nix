@@ -17,7 +17,7 @@
 
         examples = import ./examples {
           inherit pkgs;
-          rocLib = lib;
+          rocLib = lib.overrideToolchain rocPkgs.cli;
         };
 
       in {
