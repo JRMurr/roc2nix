@@ -9,12 +9,14 @@ let
 
 in stdenv.mkDerivation (cleanedArgs // {
 
+  buildInputs = [ roc ];
+
   postPatch = ''
     for f in `find . -name "*.roc" -type f`; do
-        ${jq}/bin/jq -r '[.url, .tar] | @tsv' ${downloadedDeps}/roc-packages.json |
-          while IFS=$'\t' read -r url tar; do
+        ${jq}/bin/jq -r '[.url, .path] | @tsv' ${downloadedDeps}/roc-packages.json |
+          while IFS=$'\t' read -r url path; do
             substituteInPlace $f \
-              --replace "$url" "$tar"
+              --replace "$url" "$path"
           done
     done
   '';
@@ -24,7 +26,9 @@ in stdenv.mkDerivation (cleanedArgs // {
 
     mkdir -p $out
 
-    ${roc}/bin/roc build --prebuilt-platform --max-threads 1
+    cat main.roc
+
+    RUST_BACKTRACE=full ${roc}/bin/roc build --prebuilt-platform --max-threads 1
 
     runHook postBuild
   '';
