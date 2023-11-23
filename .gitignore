@@ -1,3 +1,11 @@
 .direnv
 
 result
+
+
+
+# roc cache files
+*.rh*
+*.rm*
+preprocessedhost
+metadata
