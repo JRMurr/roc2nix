@@ -6,10 +6,20 @@
   };
 
   outputs = { self, nixpkgs, flake-utils, roc, ... }:
-    flake-utils.lib.eachDefaultSystem (system:
+    let mkLib = pkgs: import ./lib { inherit (pkgs) lib newScope; };
+    in flake-utils.lib.eachDefaultSystem (system:
       let
+
         pkgs = import nixpkgs { inherit system; };
         rocPkgs = roc.packages.${system};
+
+        lib = mkLib pkgs;
+
+        examples = import ./examples {
+          inherit pkgs;
+          rocLib = lib;
+        };
+
       in {
         formatter = pkgs.nixpkgs-fmt;
         devShells = {
@@ -18,6 +28,9 @@
           };
         };
 
-        packages = { default = pkgs.hello; };
+        packages = {
+          examples-simple = examples.simple;
+
+        };
       });
 }

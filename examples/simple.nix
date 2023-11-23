@@ -1,4 +1,4 @@
-{ buildRocPackge, lib }:
+{ rocLib, lib }:
 let
   fs = lib.fileset;
   # only grab roc files
@@ -13,13 +13,8 @@ let
   #   };
   #   # others...
   # };
-  rocDeps = [{
-    sha256 = "sha256-ToGNR0+ZIaYZ0rwF0M2QyXcRdabi84/joa4wsaC3g0Y=";
-    url =
-      "https://github.com/roc-lang/basic-cli/releases/download/0.6.0/QOQW08n38nHHrVVkJNiPIjzjvbR3iMjXeFY5w1aT46w.tar.br";
-  }];
-in buildRocPackge {
 
+in rocLib.mkRocDerivation {
   name = "foo";
   version = "0.1.0";
 
@@ -28,4 +23,9 @@ in buildRocPackge {
     fileset = sourceFiles;
   };
 
+  rocDeps = [{
+    sha256 = "sha256-ToGNR0+ZIaYZ0rwF0M2QyXcRdabi84/joa4wsaC3g0Y=";
+    url =
+      "https://github.com/roc-lang/basic-cli/releases/download/0.6.0/QOQW08n38nHHrVVkJNiPIjzjvbR3iMjXeFY5w1aT46w.tar.br";
+  }];
 }
