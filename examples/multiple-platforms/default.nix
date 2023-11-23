@@ -4,7 +4,7 @@ let
   # only grab roc files
   sourceFiles = fs.fileFilter (file: lib.hasSuffix ".roc" file.name) ./.;
 
-in rocLib.mkRocDerivation {
+in rocLib.mkRocPackage {
   name = "multiple-platforms-roc";
   version = "0.1.0";
 
