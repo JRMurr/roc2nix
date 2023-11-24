@@ -2,11 +2,12 @@
 
 { name ? "${args.pname}-${args.version}"
 , src ? null
-, rocDeps # list of {url,sha256} for all external deps of the roc program
+, rocDeps ? [ ] # list of {url,sha256} for all external deps of the roc program
 , mainFile ? null
 , # A command (likely a roc invocation) to run during the derivation's build
   # phase. Pre and post build hooks will automatically be run.
   buildPhaseRocCommand
+, installPhaseCommand ? "mkdir -p $out"
 , ...
 }@args:
 let
@@ -34,7 +35,6 @@ stdenv.mkDerivation (cleanedArgs // {
   buildPhase = ''
     runHook preBuild
 
-    mkdir -p $out # TODO: move this out and let command do it?
     ${buildPhaseRocCommand}
 
     runHook postBuild
@@ -43,9 +43,7 @@ stdenv.mkDerivation (cleanedArgs // {
   installPhase = ''
     runHook preInstall
 
-    # TODO: need to support other names
-    mkdir -p $out/bin
-    cp main $out/bin
+    ${installPhaseCommand}
 
     runHook postInstall
   '';
