@@ -8,7 +8,7 @@ let
   sourceFiles = fs.fileFilter filterfunc ./.;
 
 in
-rocLib.mkRocDerivation {
+rocLib.buildRocPlatform {
   src = fs.toSource {
     root = ./.;
     fileset = sourceFiles;

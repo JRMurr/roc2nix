@@ -26,6 +26,7 @@ NOTE: goal is to eventually have a code gen step to reduce boiler plate like nod
 
 ## Ideas to explore
 
-- Explore using the nix c abi to make a "nix platform" for roc. Potential for roc build to build the derivation or at least move more of this logic into roc.
+- Use the nix c abi to make a "nix platform" for roc. Potential for roc build to build the derivation or at least move more of this logic into roc.
+- Expose an api to work with `evalModules` or `flakeParts` to make it easier to compose all the needed builds + have better input validation
 
 Lib setup is heavily inspired by [crane](https://github.com/ipetkov/crane)
