@@ -6,7 +6,7 @@ in {
 
   # Funcs external users will probably use
   buildRocApp = callPackage ./buildRocApp.nix { };
-  buildRocPlatform = callPackage ./buildRocPlatform.nix { };
+  bundleRocPlatform = callPackage ./bundleRocPlatform.nix { };
 
 
   # TODO: maybe call this set toolchain since we need the user to give us the roc cli

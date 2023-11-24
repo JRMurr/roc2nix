@@ -16,7 +16,7 @@ NOTE: goal is to eventually have a code gen step to reduce boiler plate like nod
 
 
 ## TODO
-
+- [ ] add lang specific builders for platforms/a way to take in a compile platform derivation and merge it with roc platform code
 - [ ] support specifying a nix expression as a dep instead of just the url
 - [ ] actually verify the blake3 checksum. (since we untar roc wont do this for us). Maybe roc could support local tar balls?
 - [ ] allow specifying a specific file to build + outputted binary name
@@ -29,3 +29,9 @@ NOTE: goal is to eventually have a code gen step to reduce boiler plate like nod
 - Expose an api to work with `evalModules` or `flakeParts` to make it easier to compose all the needed builds + have better input validation
 
 Lib setup is heavily inspired by [crane](https://github.com/ipetkov/crane)
+
+
+## notes
+
+see https://github.com/JRMurr/roc/blob/3d8884a96d44e2101ce8932336b74e2b9416e029/crates/compiler/build/src/link.rs#L437 
+for how roc calls out to compile different platforms

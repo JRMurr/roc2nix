@@ -8,7 +8,7 @@ let
   sourceFiles = fs.fileFilter filterfunc ./.;
 
 in
-rocLib.buildRocPlatform {
+rocLib.bundleRocPlatform {
   name = "c-platform";
   version = "0.1.0";
   src = fs.toSource {

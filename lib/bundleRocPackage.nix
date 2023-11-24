@@ -19,7 +19,7 @@ assert lib.asserts.assertOneOf "compressionType" compressionType validCompressio
 mkRocDerivation
   (cleanedArgs // {
     buildPhaseRocCommand = args.buildPhaseRocCommand or ''
-      roc build --prebuilt-platform --linker=legacy --bundle ${bundleStr} ${mainFile} ${rocExtraArgs}
+      roc build --linker=legacy --bundle ${bundleStr} ${mainFile} ${rocExtraArgs}
     '';
 
     installPhaseCommand = args.installPhaseCommand or ''
