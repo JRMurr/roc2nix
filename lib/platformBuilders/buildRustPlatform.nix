@@ -71,6 +71,7 @@ llvmPkgs.stdenv.mkDerivation rec {
   srcs = [
     rustBuiltLib
     linkedBuild
+    # TODO: need og roc source code here so the object file is with the roc code
   ];
 
   sourceRoot = ".";
@@ -81,5 +82,4 @@ llvmPkgs.stdenv.mkDerivation rec {
     mkdir -p $out
     cp ${host_dest} $out/${host_dest}
   '';
-
 }
