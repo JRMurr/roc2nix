@@ -20,7 +20,8 @@
           rocLib = lib.overrideToolchain rocPkgs.cli;
         };
 
-      in {
+      in
+      {
         formatter = pkgs.nixpkgs-fmt;
         devShells = {
           default = pkgs.mkShell {

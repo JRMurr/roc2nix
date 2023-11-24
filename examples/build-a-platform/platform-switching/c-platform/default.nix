@@ -7,7 +7,8 @@ let
   filterfunc = file: lib.list.any (s: lib.hasSuffix s file) fileSuffixes;
   sourceFiles = fs.fileFilter filterfunc ./.;
 
-in rocLib.mkRocDerivation {
+in
+rocLib.mkRocDerivation {
   src = fs.toSource {
     root = ./.;
     fileset = sourceFiles;

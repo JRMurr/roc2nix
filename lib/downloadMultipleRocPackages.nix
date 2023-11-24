@@ -6,9 +6,10 @@ let
 
   jsonFiles =
     lib.concatMapStrings (p: "${lib.escapeShellArg (downloadedFileName p)} ")
-    rocDeps;
+      rocDeps;
 
-in runCommandLocal "download-roc-packages" { } ''
+in
+runCommandLocal "download-roc-packages" { } ''
   mkdir -p $out
   ${jq}/bin/jq -s '.' ${jsonFiles} > $out/roc-packages.json
 ''

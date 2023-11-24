@@ -1,22 +1,13 @@
 { mkRocDerivation }:
 
 { rocBuildCommand ? "roc build --prebuilt-platform --linker=legacy"
-  # , cargoExtraArgs ? "--locked"
-  # , cargoTestCommand ? "cargoWithProfile test"
-  # , cargoTestExtraArgs ? ""
-, ... }@args:
-let
-  cleanedArgs = removeAttrs args [
-    "rocBuildCommand"
-    # "cargoExtraArgs"
-    # "cargoTestCommand"
-    # "cargoTestExtraArgs"
-    # "outputHashes"
-  ];
+, rocExtraArgs ? ""
+, ...
+}@args:
+let cleanedArgs = removeAttrs args [ "rocBuildCommand" "rocExtraArgs" ];
 
 in mkRocDerivation (args // {
   buildPhaseRocCommand = args.buildPhaseRocCommand or ''
-    ${rocBuildCommand}
+    ${rocBuildCommand} ${rocExtraArgs}
   '';
 })
-# roc build --prebuilt-platform --linker=legacy
