@@ -17,10 +17,9 @@ NOTE: goal is to eventually have a code gen step to reduce boiler plate like nod
 
 ## TODO
 
-- [ ] support bundling instead of just building a binary
-- [ ] support specifiying a nix expression as a dep instead of just the url
+- [ ] support specifying a nix expression as a dep instead of just the url
 - [ ] actually verify the blake3 checksum. (since we untar roc wont do this for us). Maybe roc could support local tar balls?
-- [ ] allow specifiying a specific file to build + outputed binary name
+- [ ] allow specifying a specific file to build + outputted binary name
 - [ ] the code gen tool to get all deps of a roc package for you
 
 
