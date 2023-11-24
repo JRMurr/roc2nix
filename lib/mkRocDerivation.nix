@@ -29,6 +29,7 @@ stdenv.mkDerivation (cleanedArgs // {
             substituteInPlace $f \
               --replace "$url" "$path"
           done
+        cat $f
     done
   '';
 

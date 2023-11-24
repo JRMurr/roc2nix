@@ -6,7 +6,11 @@ in {
 
   # Funcs external users will probably use
   buildRocApp = callPackage ./buildRocApp.nix { };
-  bundleRocPlatform = callPackage ./bundleRocPlatform.nix { };
+  bundleRocPackage = callPackage ./bundleRocPackage.nix { };
+
+  # platform helps
+  buildRustPlatform = callPackage ./platformBuilders/buildRustPlatform.nix { };
+
 
 
   # TODO: maybe call this set toolchain since we need the user to give us the roc cli
@@ -15,7 +19,9 @@ in {
     self.overrideScope' (_final: _prev: { roc = toolchain; });
 
 
-  # internal funcs
+  # ---------
+  # Internals
+  # ---------
   rocHelperFunctionsHook =
     callPackage ./setupHooks/rocHelperFunctions.nix { };
   downloadMultipleRocPackages =

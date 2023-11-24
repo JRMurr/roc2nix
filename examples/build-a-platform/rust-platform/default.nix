@@ -1,8 +1,10 @@
 { rocLib
 , lib
 , rustPlatform # from nix not roc...
+, llvmPackages_16 # TODO: keep in sync with roc repo
 , runCommand
 }:
+
 
 # let
 #   fs = lib.fileset;
@@ -12,6 +14,7 @@
 #   sourceFiles = fs.fileFilter filterfunc ./.;
 
 let
+  llvmPkgs = llvmPackages_16;
 
   tmp = rustPlatform.buildRustPackage {
     pname = "test";
@@ -37,22 +40,25 @@ let
       # "--bin=host"
     ];
 
+    # RUSTFLAGS = "-C link-args=-rdynamic"; # TODO: roc only does this for surgical link (--bin=host) do we need to split this into builds?
+
     doCheck = false;
 
   };
 
+  linkedBuild = rustPlatform.buildRustPackage { };
+
 in
+rocLib.buildRustPlatform {
+  pname = "test";
+  version = "0.0.1";
 
-# in
-  # rocLib.bundleRocPlatform {
-  #   name = "rust-platform";
-  #   version = "0.1.0";
-  #   src = ./.;
-  #   compressionType = "none";
-  # }
+  src = ./.; # TODO: filter to rust only
 
-runCommand "test-stuff" { } ''
-
-  ls -la ${tmp}
-  cp -r ${tmp} $out
-''
+  cargoLock = {
+    lockFile = ./Cargo.lock;
+    outputHashes = {
+      "roc_std-0.0.1" = "sha256-slt1TVyaFMUaFtQqHofgpLkchzEu5DH2HPxInRU14No=";
+    };
+  };
+}
