@@ -11,7 +11,7 @@ lib.makeScope newScope (self:
       callPackage ./downloadMultipleRocPackages.nix { };
     downloadRocPackage = callPackage ./downloadRocPackage.nix { };
     mkRocDerivation = callPackage ./mkRocDerivation.nix { };
-    mkRocPackage = callPackage ./mkRocPackage.nix { };
+    buildRocApp = callPackage ./buildRocApp.nix { };
 
     # TODO: maybe call this set toolchain since we need the user to give us the roc cli
     # since roc is not in nix pkgs yet...

@@ -6,7 +6,7 @@ let tarball = fetchurl { inherit url sha256; };
 in runCommand "roc-package-download" { } ''
   mkdir -p $out/package
 
-  # TODO: need to support gzip decompress to
+  # TODO: need to support gzip decompress too
   ${brotli}/bin/brotli --decompress --stdout ${tarball} | tar -C $out/package -x
 
   echo $out/package/main.roc
