@@ -1,22 +1,19 @@
 { jq, stdenv, downloadMultipleRocPackages, rocHelperFunctionsHook }:
 
-{ name ? "${args.pname}-${args.version}"
-, src ? null
-, rocDeps ? [ ] # list of {url,sha256} for all external deps of the roc program
+{ name ? "${args.pname}-${args.version}", src ? null
+  # attrset of import url => (hash for fetch | nix derivation containing the package)
+, rocDeps ? { }
+  # the file to pass to roc build
 , mainFile ? null
 , # A command (likely a roc invocation) to run during the derivation's build
-  # phase. Pre and post build hooks will automatically be run.
-  buildPhaseRocCommand
-, installPhaseCommand ? "mkdir -p $out"
-, ...
-}@args:
+# phase. Pre and post build hooks will automatically be run.
+buildPhaseRocCommand, installPhaseCommand ? "mkdir -p $out", ... }@args:
 let
   cleanedArgs =
     builtins.removeAttrs args [ "rocDeps" "mainFile" "buildPhaseRocCommand" ];
   downloadedDeps = downloadMultipleRocPackages { inherit rocDeps; };
 
-in
-stdenv.mkDerivation (cleanedArgs // {
+in stdenv.mkDerivation (cleanedArgs // {
 
   nativeBuildInputs = [ rocHelperFunctionsHook ];
 
