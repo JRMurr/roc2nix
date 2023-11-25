@@ -4,6 +4,16 @@ Very much a work in progress but basic nix building works
 
 to run the example you can run `nix build .#examples-simple --print-build-logs` in the repo root
 
+## Quick start
+
+See [this example](./templates/quick-start/) for a simple roc app taken form [roc-parser](https://github.com/lukewilliamboswell/roc-parser/blob/main/examples/letters.roc) which builds a roc binary using 2 external deps
+
+
+you can run the following to copy the template into your current folder
+```shell
+ nix flake init --template github:JRMurr/roc2nix#quick-start --refresh
+```
+
 
 ## How it works
 
