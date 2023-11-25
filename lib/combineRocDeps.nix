@@ -19,8 +19,6 @@ let
           --arg url "${url}" \
           --arg path "${val}" \
           '{"url": $url, path: $path }' > $out/roc-package-info.json
-          echo ">>>>"
-          cat $out/roc-package-info.json
       '';
     in
     "${command}/roc-package-info.json"

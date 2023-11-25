@@ -101,6 +101,5 @@ llvmPkgs.stdenv.mkDerivation rec {
     mkdir -p $out
     cp ${host_dest} $out/${host_dest}
     cp -r ${rocCode}/. $out
-    ls -la $out
   '';
 }
