@@ -6,8 +6,14 @@
   };
 
   outputs = { self, nixpkgs, flake-utils, roc, ... }:
-    let mkLib = pkgs: import ./lib { inherit (pkgs) lib newScope; };
-    in flake-utils.lib.eachDefaultSystem (system:
+    let
+      mkLib = pkgs: import ./lib { inherit (pkgs) lib newScope; };
+
+      templates = import ./templates { };
+
+    in
+    { inherit templates; } //
+    flake-utils.lib.eachDefaultSystem (system:
       let
 
         pkgs = import nixpkgs { inherit system; };
@@ -24,13 +30,6 @@
       {
         # the exposed lib
         inherit lib;
-
-        templates = {
-          quick-start = {
-            description = "Build a Roc app with multiple external deps";
-            path = ./templates/quick-start;
-          };
-        };
 
         formatter = pkgs.nixpkgs-fmt;
         devShells = {
