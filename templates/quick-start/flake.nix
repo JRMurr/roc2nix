@@ -51,6 +51,9 @@
             buildInputs = with pkgs;
               [
                 rocPkgs.cli
+
+                # add compiledApp here and `main` will be exposed when you run `nix develop`
+                # I would not reccomend doing this for a program you are changing often on
               ];
           };
         };
