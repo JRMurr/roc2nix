@@ -9,8 +9,6 @@ let
 
   fileHasAnySuffix = fileSuffixes: file: (lib.lists.any (s: lib.hasSuffix s file.name) fileSuffixes);
 
-
-
   rustFilter = basePath: (
     let
       mainFilter = fileFilter
@@ -20,7 +18,10 @@ let
     unions [ mainFilter (basePath + "/Cargo.toml") (basePath + "/Cargo.lock") ]
   );
 
+  cFilter = basePath: fileFilter (fileHasAnySuffix [ ".c" ]) basePath;
+
+  rocFilter = basePath: fileFilter (fileHasAnySuffix [ ".roc" ]) basePath;
 in
 {
-  inherit rustFilter;
+  inherit rustFilter cFilter rocFilter;
 }

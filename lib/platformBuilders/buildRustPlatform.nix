@@ -27,15 +27,15 @@ let
   rustBuildName = "${pname}-${version}-compile-rust";
   cBuildName = "${pname}-${version}-compile-c-host";
 
-  rustSrc = let basePath = fs.fromSource args.src; in
-    fs.intersection basePath
-      (languageFilters.rustFilter args.src);
+  # rustSrc = let basePath = fs.fromSource args.src; in
+  # # fs.intersection basePath
+  #   (languageFilters.rustFilter args.src);
 
   # TODO: probably move the rust build itself to diff file...
   rustBuildArgs = cleanedArgs // {
     src = fs.toSource {
       root = args.src; # TODO: would this get sad if the passed in src is the output of a derivation?
-      fileset = rustSrc;
+      fileset = languageFilters.rustFilter args.src;
     };
     name = rustBuildName;
     cargoBuildFlags = [
@@ -53,7 +53,10 @@ let
     llvmPkgs.stdenv.mkDerivation
       {
         name = cBuildName;
-        src = args.src; # TODO: just filter to c code?
+        src = fs.toSource {
+          root = args.src; # TODO: would this get sad if the passed in src is the output of a derivation?
+          fileset = languageFilters.cFilter args.src;
+        };
 
         buildPhase = ''
           runHook preBuild
@@ -74,6 +77,13 @@ let
   # should only really do all of them if making a package for external use
   # if only being used in a nix build we can keep it to just the system we are building for
   host_dest = "linux-x64.o";
+
+  # TODO: expose this somehow so users can override
+  rocCode = fs.toSource {
+    root = args.src; # TODO: would this get sad if the passed in src is the output of a derivation?
+    fileset = languageFilters.rocFilter args.src;
+  };
+
 in
 llvmPkgs.stdenv.mkDerivation rec {
   name = "${pname}-${version}";
@@ -81,7 +91,6 @@ llvmPkgs.stdenv.mkDerivation rec {
   srcs = [
     rustBuiltLib
     linkedBuild
-    # TODO: need og roc source code here so the object file is with the roc code
   ];
 
   sourceRoot = ".";
@@ -91,5 +100,7 @@ llvmPkgs.stdenv.mkDerivation rec {
 
     mkdir -p $out
     cp ${host_dest} $out/${host_dest}
+    cp -r ${rocCode}/. $out
+    ls -la $out
   '';
 }
