@@ -20,4 +20,5 @@ let
     }];
   };
 
-in { inherit platform app; }
+in
+{ inherit platform app; }
