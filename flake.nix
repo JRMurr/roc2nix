@@ -43,6 +43,7 @@
           examples-multiple-platforms = examples.multiple-platforms;
           examples-c-platform = examples.build-a-platform.c-platform;
           examples-rust-platform = examples.build-a-platform.rust-platform;
+          examples-rust-app = examples.build-a-platform.rust-app;
         };
       });
 }

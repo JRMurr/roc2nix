@@ -4,8 +4,6 @@
 , src ? null
   # attrset of import url => (hash for fetch | nix derivation containing the package)
 , rocDeps ? { }
-  # the file to pass to roc build
-, mainFile ? null
 , # A command (likely a roc invocation) to run during the derivation's build
   # phase. Pre and post build hooks will automatically be run.
   buildPhaseRocCommand
@@ -14,7 +12,7 @@
 }@args:
 let
   cleanedArgs =
-    builtins.removeAttrs args [ "rocDeps" "mainFile" "buildPhaseRocCommand" ];
+    builtins.removeAttrs args [ "rocDeps" "buildPhaseRocCommand" ];
   downloadedDeps = combineRocDeps { inherit rocDeps; };
 
 in
