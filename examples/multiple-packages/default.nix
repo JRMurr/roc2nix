@@ -6,7 +6,7 @@ let
 
 in
 rocLib.buildRocApp {
-  name = "multiple-platforms-roc";
+  name = "multiple-packages-roc";
   version = "0.1.0";
 
   src = fs.toSource {

@@ -6,6 +6,6 @@ let
 in
 {
   simple = callPackage ./simple { };
-  multiple-platforms = callPackage ./multiple-platforms { };
+  multiple-packages = callPackage ./multiple-packages { };
   build-a-platform = callPackage ./build-a-platform { };
 }
