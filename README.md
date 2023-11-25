@@ -16,11 +16,10 @@ NOTE: goal is to eventually have a code gen step to reduce boiler plate like nod
 
 
 ## TODO
-- [ ] add lang specific builders for platforms/a way to take in a compile platform derivation and merge it with roc platform code
-- [ ] support specifying a nix expression as a dep instead of just the url
+- [ ] TLC around how roc deps are replaced by the nix store paths. Right now its basically a regex is fine for the long urls but for local file paths there is a potential for collisions
+- [ ] lang specific builders for platforms/a way to take in a compile platform derivation and merge it with roc platform code
 - [ ] actually verify the blake3 checksum. (since we untar roc wont do this for us). Maybe roc could support local tar balls?
-- [ ] allow specifying a specific file to build + outputted binary name
-- [ ] the code gen tool to get all deps of a roc package for you
+- [ ] A code gen tool to get all deps of a roc package for you
 
 
 ## Ideas to explore
