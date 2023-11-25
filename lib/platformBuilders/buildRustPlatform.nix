@@ -3,11 +3,13 @@
 , rustPlatform # from nix not roc...
 , llvmPackages_16 # TODO: keep in sync with roc repo
 , runCommand
+, languageFilters
 }:
 
 let
 
   llvmPkgs = llvmPackages_16;
+  fs = lib.fileset;
 in
 
 
@@ -19,14 +21,22 @@ in
 }@args:
 
 let
-  cleanedArgs = removeAttrs args [ "mainFile" "rustBuildOverrides" "pname" "version" ];
+  cleanedArgs = removeAttrs args [ "mainFile" "rustBuildOverrides" "pname" "version" "src" ];
 
   # TODO: allow just setting name
   rustBuildName = "${pname}-${version}-compile-rust";
   cBuildName = "${pname}-${version}-compile-c-host";
 
+  rustSrc = let basePath = fs.fromSource args.src; in
+    fs.intersection basePath
+      (languageFilters.rustFilter args.src);
+
   # TODO: probably move the rust build itself to diff file...
   rustBuildArgs = cleanedArgs // {
+    src = fs.toSource {
+      root = args.src; # TODO: would this get sad if the passed in src is the output of a derivation?
+      fileset = rustSrc;
+    };
     name = rustBuildName;
     cargoBuildFlags = [
       "--lib"

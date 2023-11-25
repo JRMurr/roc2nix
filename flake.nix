@@ -22,6 +22,9 @@
 
       in
       {
+        # the exposed lib
+        inherit lib;
+
         formatter = pkgs.nixpkgs-fmt;
         devShells = {
           default = pkgs.mkShell {
