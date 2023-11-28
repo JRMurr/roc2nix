@@ -49,7 +49,7 @@ let
   rustBuiltLib = rustPlatform.buildRustPackage mergedRustArgs;
 
   cHostDest = "c_host.o";
-  linkedBuild =
+  compiledC =
     llvmPkgs.stdenv.mkDerivation
       {
         name = cBuildName;
@@ -90,7 +90,7 @@ llvmPkgs.stdenv.mkDerivation rec {
 
   srcs = [
     rustBuiltLib
-    linkedBuild
+    compiledC
   ];
 
   sourceRoot = ".";
