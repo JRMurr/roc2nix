@@ -27,7 +27,6 @@ NOTE: goal is to eventually have a code gen step to reduce boiler plate like nod
 
 ## TODO
 - [ ] TLC around how roc deps are replaced by the nix store paths. Right now its basically a regex is fine for the long urls but for local file paths there is a potential for collisions
-- [ ] lang specific builders for platforms/a way to take in a compile platform derivation and merge it with roc platform code
 - [ ] actually verify the blake3 checksum. (since we untar roc wont do this for us). Maybe roc could support local tar balls?
 - [ ] A code gen tool to get all deps of a roc package for you
 
