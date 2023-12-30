@@ -84,22 +84,30 @@ let
     fileset = languageFilters.rocFilter args.src;
   };
 
+  linkedCode = llvmPkgs.stdenv.mkDerivation
+    rec {
+      name = "${pname}-${version}";
+
+      srcs = [
+        rustBuiltLib
+        compiledC
+      ];
+
+      sourceRoot = ".";
+
+      buildPhase = ''
+        $LD -r -L ${rustBuildName}/lib ${cBuildName}/${cHostDest} -lhost -o ${host_dest}
+
+        mkdir -p $out
+        cp ${host_dest} $out/${host_dest}
+        cp -r ${rocCode}/. $out
+      '';
+    };
+
 in
-llvmPkgs.stdenv.mkDerivation rec {
-  name = "${pname}-${version}";
+runCommand "join-roc-code-with-compiled-platform" { } ''
+  mkdir -p $out
 
-  srcs = [
-    rustBuiltLib
-    compiledC
-  ];
-
-  sourceRoot = ".";
-
-  buildPhase = ''
-    $LD -r -L ${rustBuildName}/lib ${cBuildName}/${cHostDest} -lhost -o ${host_dest}
-
-    mkdir -p $out
-    cp ${host_dest} $out/${host_dest}
-    cp -r ${rocCode}/. $out
-  '';
-}
+  cp ${linkedCode}/${host_dest} $out/${host_dest}
+  cp -r ${rocCode}/. $out
+''
